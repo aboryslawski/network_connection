@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
         }
 
         myAddr.sin_family = AF_INET;
-        myAddr.sin_port = port;
+        myAddr.sin_port = htons(port);
         myAddr.sin_addr = s_addr;
         
         if(bind(fileDesc, (struct sockaddr *) &myAddr, sizeof(struct sockaddr_in)) == -1)

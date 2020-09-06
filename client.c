@@ -41,16 +41,16 @@ int main(int argc, char* argv[])
         }
     }
 
-    if(!portProvided || !sockProvided)
+    if (!portProvided || !sockProvided)
     {
         fprintf(stderr, "Usage: %s [-p] port number [-d] file descriptor\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    if(DEBUG)
+    if (DEBUG)
         printf("Port number: %d, File descriptor: %d\n", port,socket);
     
-    if( inet_aton("127.0.0.1", &se_addr) == 0 )
+    if ( inet_aton("127.0.0.1", &se_addr) == 0 )
     {
         fprintf(stderr, "Inet error, wrong ip address\n");
         exit(EXIT_FAILURE);
@@ -59,12 +59,12 @@ int main(int argc, char* argv[])
     sockDesc = socket(AF_INET, SOCK_STREAM, 0);
 
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = port;
+    serverAddr.sin_port = htons(port);
     serverAddr.sin_addr = se_addr;
     
     addr_size = sizeof(struct sockaddr_in);
 
-    if( connect(sockDesc, (struct sockaddr *)  &serverAddr, sizeof(struct sockaddr_in)) == -1)
+    if ( connect(sockDesc, (struct sockaddr *)  &serverAddr, sizeof(struct sockaddr_in)) == -1)
     {
         perror("Error connecting");
         exit(EXIT_FAILURE);
@@ -74,4 +74,3 @@ int main(int argc, char* argv[])
 
     return 1;
 }
-
